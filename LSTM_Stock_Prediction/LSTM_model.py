@@ -16,12 +16,6 @@ csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005
 
 csv_data['Date'] = pd.to_datetime(csv_data['Date'], format='%Y-%m-%d')
 
-# plt.figure(figsize=(16, 9))
-# sns.lineplot(y=csv_data['Average'], x=csv_data['Date'])
-# plt.xlabel('time')
-# plt.ylabel('average_price')
-# plt.show()
-
 scaler = MinMaxScaler()
 scale_cols = ['High', 'Low', 'Close', 'Average']
 

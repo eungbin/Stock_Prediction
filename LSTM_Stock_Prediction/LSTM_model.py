@@ -1,97 +1,66 @@
 import pandas as pd
-from matplotlib import pyplot as plt
-import seaborn as sns
-from sklearn.preprocessing import MinMaxScaler
 import numpy as np
-from sklearn.model_selection import train_test_split
-
+import matplotlib.pyplot as plt
 from keras.models import Sequential
-from keras.layers import Dense
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import LSTM
-
-import os
+from keras.layers import LSTM, Dropout, Dense, Activation
+# from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
+import datetime
 
 csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
 
-csv_data['Date'] = pd.to_datetime(csv_data['Date'], format='%Y-%m-%d')
+high_prices = csv_data['High'].values
+low_prices = csv_data['Low'].values
+mid_prices = (high_prices + low_prices) / 2
 
-scaler = MinMaxScaler()
-scale_cols = ['High', 'Low', 'Close', 'Average']
+seq_len = 50
+sequence_length = seq_len + 1
 
-csv_scaled = scaler.fit_transform(csv_data[scale_cols])
+result = []
+for index in range(len(mid_prices) - sequence_length):
+    result.append(mid_prices[index: index + sequence_length])
 
-csv_scaled = pd.DataFrame(csv_scaled)
-csv_scaled.columns = scale_cols
 
-# plt.figure(figsize=(16, 9))
-# sns.lineplot(y=csv_scaled['Average'], x=csv_data['Date'])
-# plt.xlabel('time')
-# plt.ylabel('mean_price')
-# plt.show()
+normalized_data = []
+for window in result:
+    normalized_window = [((float(p) / float(window[0])) - 1) for p in window]
+    normalized_data.append(normalized_window)
 
-TEST_SIZE = 200
+result = np.array(normalized_data)
+print(result[0])
 
-train = csv_scaled[:-TEST_SIZE]
-test = csv_scaled[-TEST_SIZE:]
+row = int(round(result.shape[0] * 0.9))
+train = result[:row, :]
+np.random.shuffle(train)
 
-print(csv_scaled.shape)
-print(train.shape)
-print(test.shape)
+x_train = train[:, :-1]
+x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+y_train = train[:, -1]
 
-def make_dataset(data, label, window_size=20):
-    feature_list = []
-    label_list = []
-    for i in range(len(data) - window_size):
-        feature_list.append(np.array(data.iloc[i:i+window_size]))
-        label_list.append(np.array(label.iloc[i+window_size]))
-    return np.array(feature_list), np.array(label_list)
+x_test = result[row:, :-1]
+x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+y_test = result[row:, -1]
 
-feature_cols = ['High', 'Low', 'Close']
-label_cols = ['Average']
-
-train_feature = train[feature_cols]
-train_label = train[label_cols]
-
-train_feature, train_label = make_dataset(train_feature, train_label, 20)
-
-x_train, x_valid, y_train, y_valid = train_test_split(train_feature, train_label, test_size=0.2)
-
-print('x_train.shape : {0}'.format(x_train.shape))
-print('x_valid.shape : {0}'.format(x_valid.shape))
-
-test_feature = test[feature_cols]
-test_label = test[label_cols]
-
-test_feature, test_label = make_dataset(test_feature, test_label, 20)
-print('test_feature.shape : {0}'.format(test_feature.shape))
-print('test_label.shape : {0}'.format(test_label.shape))
+print(x_train.shape)
+print(x_test.shape)
 
 model = Sequential()
-model.add(LSTM(16,
-               input_shape=(train_feature.shape[1], train_feature.shape[2]),
-               activation='relu',
-               return_sequences=False)
-          )
-model.add(Dense(1))
+model.add(LSTM(50, return_sequences=True, input_shape=(50, 1)))
+model.add(LSTM(64, return_sequences=False))
+model.add(Dense(1, activation='linear'))
+model.compile(loss='mse', optimizer='rmsprop')
+model.summary()
 
-model_path = 'C:/dev/react/stock_predict/LSTM_Stock_Prediction/'
-model.compile(loss='mean_squared_error', optimizer='adam')
-early_stop = EarlyStopping(monitor='val_loss', patience=5)
-filename = os.path.join(model_path, 'tmp_checkpoint.h5')
-checkpoint = ModelCheckpoint(filename, monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
+model.fit(x_train, y_train,
+          validation_data=(x_test, y_test),
+          batch_size=10,
+          epochs=20)
 
-# history = model.fit(x_train, y_train,
-#                     epochs=200,
-#                     batch_size=16,
-#                     validation_data=(x_valid, y_valid),
-#                     callbacks=[early_stop, checkpoint])
-
-model.load_weights(filename)
-pred = model.predict(test_feature)
-
-plt.figure(figsize=(12, 9))
-plt.plot(test_label, label='actual')
-plt.plot(pred, label='prediction')
-plt.legend()
+pred = model.predict(x_test)
+fig = plt.figure(facecolor='white', figsize=(20,10))
+ax = fig.add_subplot(111)
+ax.plot(y_test, label='True')
+ax.plot(pred, label='Prediction')
+ax.legend()
 plt.show()
+
+model.save('stock_predict.h5')

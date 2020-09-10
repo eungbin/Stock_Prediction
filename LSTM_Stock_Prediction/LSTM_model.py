@@ -5,8 +5,10 @@ from keras.models import Sequential
 from keras.layers import LSTM, Dropout, Dense, Activation
 # from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
 import datetime
+from keras.models import load_model
 
 csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
+
 
 high_prices = csv_data['High'].values
 low_prices = csv_data['Low'].values
@@ -19,6 +21,7 @@ result = []
 for index in range(len(mid_prices) - sequence_length):
     result.append(mid_prices[index: index + sequence_length])
 
+print(result.__len__())
 
 normalized_data = []
 for window in result:
@@ -26,9 +29,10 @@ for window in result:
     normalized_data.append(normalized_window)
 
 result = np.array(normalized_data)
-print(result[0])
+print(result.shape)
 
 row = int(round(result.shape[0] * 0.9))
+print("row : ", row)
 train = result[:row, :]
 np.random.shuffle(train)
 
@@ -40,27 +44,21 @@ x_test = result[row:, :-1]
 x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
 y_test = result[row:, -1]
 
-print(x_train.shape)
+# print(x_train.shape)
 print(x_test.shape)
+# print(x_test)
 
-model = Sequential()
-model.add(LSTM(50, return_sequences=True, input_shape=(50, 1)))
-model.add(LSTM(64, return_sequences=False))
-model.add(Dense(1, activation='linear'))
-model.compile(loss='mse', optimizer='rmsprop')
-model.summary()
+# model = Sequential()
+# model.add(LSTM(50, return_sequences=True, input_shape=(50, 1)))
+# model.add(LSTM(64, return_sequences=False))
+# model.add(Dense(1, activation='linear'))
+# model.compile(loss='mse', optimizer='rmsprop')
+# model.summary()
 
-model.fit(x_train, y_train,
-          validation_data=(x_test, y_test),
-          batch_size=10,
-          epochs=20)
+# model.fit(x_train, y_train,
+#           validation_data=(x_test, y_test),
+#           batch_size=10,
+#           epochs=20)
+#
 
-pred = model.predict(x_test)
-fig = plt.figure(facecolor='white', figsize=(20,10))
-ax = fig.add_subplot(111)
-ax.plot(y_test, label='True')
-ax.plot(pred, label='Prediction')
-ax.legend()
-plt.show()
-
-model.save('stock_predict.h5')
+# model.save('stock_predict.h5')

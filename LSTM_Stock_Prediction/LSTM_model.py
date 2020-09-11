@@ -6,47 +6,60 @@ from keras.layers import LSTM, Dropout, Dense, Activation
 # from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
 import datetime
 from keras.models import load_model
+import pymysql
+
+HOST = '127.0.0.1'
+PORT = 3306
+USER = 'root'
+DB = 'stock_prediction'
+PASSWORD = 'vk2sjf12'
+
+pymysql.converters.encoders[np.int64] = pymysql.converters.escape_float
+pymysql.converters.conversions = pymysql.converters.encoders.copy()
+pymysql.converters.conversions.update(pymysql.converters.decoders)
+
+conn = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, db=DB)
 
 csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
 
+cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-high_prices = csv_data['High'].values
-low_prices = csv_data['Low'].values
-mid_prices = (high_prices + low_prices) / 2
+# for date, high, low in zip(csv_data['Date'], csv_data['High'], csv_data['Low']):
+#     convert_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+#     sql = "insert into csv values(%s, %s, %s)"
+#     cursor.execute(sql, (convert_date, high, low))
 
-seq_len = 50
-sequence_length = seq_len + 1
-
-result = []
-for index in range(len(mid_prices) - sequence_length):
-    result.append(mid_prices[index: index + sequence_length])
-
-print(result.__len__())
-
-normalized_data = []
-for window in result:
-    normalized_window = [((float(p) / float(window[0])) - 1) for p in window]
-    normalized_data.append(normalized_window)
-
-result = np.array(normalized_data)
-print(result.shape)
-
-row = int(round(result.shape[0] * 0.9))
-print("row : ", row)
-train = result[:row, :]
-np.random.shuffle(train)
-
-x_train = train[:, :-1]
-x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-y_train = train[:, -1]
-
-x_test = result[row:, :-1]
-x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
-y_test = result[row:, -1]
-
-# print(x_train.shape)
-print(x_test.shape)
-# print(x_test)
+# conn.commit()
+#
+# high_prices = csv_data['High'].values
+# low_prices = csv_data['Low'].values
+# mid_prices = (high_prices + low_prices) / 2
+#
+# seq_len = 50
+# sequence_length = seq_len + 1
+#
+# result = []
+# for index in range(len(mid_prices) - sequence_length):
+#     result.append(mid_prices[index: index + sequence_length])
+#
+# normalized_data = []
+# for window in result:
+#     normalized_window = [((float(p) / float(window[0])) - 1) for p in window]
+#     normalized_data.append(normalized_window)
+#
+# result = np.array(normalized_data)
+#
+# row = int(round(result.shape[0] * 0.9))
+# train = result[:row, :]
+# np.random.shuffle(train)
+#
+# x_train = train[:, :-1]
+# x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+# y_train = train[:, -1]
+#
+# x_test = result[row:, :-1]
+# x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+# y_test = result[row:, -1]
 
 # model = Sequential()
 # model.add(LSTM(50, return_sequences=True, input_shape=(50, 1)))

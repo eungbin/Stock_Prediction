@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03c8b98-c2b6-40f8-b32c-b978329f6e13" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model_predict.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LSTM_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/LSTM_model.py" afterDir="false" />
     </list>

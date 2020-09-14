@@ -31,12 +31,6 @@ print(mid_prices)
 conn.close()
 #------------------------------#
 
-# csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
-#
-# high_prices = (csv_data.sort_values(by="Date", ascending=False).head(50))['High'].values
-# low_prices = (csv_data.sort_values(by="Date", ascending=False).head(50))['Low'].values
-# mid_prices = (high_prices + low_prices) / 2
-
 seq_len = 49
 sequence_length = seq_len + 1
 

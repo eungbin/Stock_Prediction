@@ -1,7 +1,7 @@
 # Stock_Prediction
-Stock_Prediction with React.js, Python
+### Stock_Prediction with React.js, Python
 
-
+#### Python Part
 
 + 2020.09.07  -->  파이썬 csv파일 불러와서 차트 띄우기
 + 2020.09.07  -->  불러온 csv파일 데이터 정규화 [ Data Normalization ]
@@ -12,3 +12,11 @@ Stock_Prediction with React.js, Python
 + 2020.09.14  -->  yahoo finance API를 이용하여 최신 주가정보 가져와, csv파일로 변환하고 DB에 저장
 + 현재까지 시스템 흐름
 + save_csv.py  [최신 주가정보 가져와 csv파일로 변환하여 저장] -> insert_db.py [변환한 csv파일을 로드하여 db에 저장] -> LSTM_model.py [최신 주가정보가 반영된 db를 기준으로 모델파일 생성] -> model_predict.py [생성된 모델파일을 이용하여 다음날 주가 예측]
+
+
+
+------
+
+#### React.js Part
+
++ 2020.09.14  -->  React.js 프로젝트 생성

@@ -1,0 +1,27 @@
+header {
+    height: 75px;
+    padding: 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu {
+    display: inline-block;
+}
+
+.first-menu {
+    border-right: 2px solid gray;
+    padding-right: 40px;
+}
+
+.second-menu {
+    border-right: 2px solid gray;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.third-menu {
+    padding-left: 40px;
+}

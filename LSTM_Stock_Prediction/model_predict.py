@@ -2,17 +2,45 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import load_model
+import pymysql
 
-csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
+HOST = '127.0.0.1'
+PORT = 3306
+USER = 'root'
+DB = 'stock_prediction'
+PASSWORD = 'vk2sjf12'
 
-high_prices = (csv_data.sort_values(by="Date", ascending=False).head(50))['High'].values
-low_prices = (csv_data.sort_values(by="Date", ascending=False).head(50))['Low'].values
-mid_prices = (high_prices + low_prices) / 2
+pymysql.converters.encoders[np.int64] = pymysql.converters.escape_float
+pymysql.converters.conversions = pymysql.converters.encoders.copy()
+pymysql.converters.conversions.update(pymysql.converters.decoders)
+
+conn = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, db=DB)
+
+cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+#--- DB에서 주가정보 불러오기 ---#
+sql = "select high, low from csv order by date desc limit 50"
+cursor.execute(sql)
+
+rows = cursor.fetchall()
+mid_prices = []
+for i in rows:
+    mid_prices.append( (i['low'] + i['high'])/2 )
+
+print(mid_prices)
+conn.close()
+#------------------------------#
+
+# csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
+#
+# high_prices = (csv_data.sort_values(by="Date", ascending=False).head(50))['High'].values
+# low_prices = (csv_data.sort_values(by="Date", ascending=False).head(50))['Low'].values
+# mid_prices = (high_prices + low_prices) / 2
 
 seq_len = 49
 sequence_length = seq_len + 1
 
-# print(len(mid_prices))
+print(len(mid_prices))
 result = []
 
 for i in mid_prices:

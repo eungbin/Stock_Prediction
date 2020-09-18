@@ -1,3 +1,7 @@
+# 2020년도 3학년 2학기 LINC+ 캡스톤 디자인 프로젝트
+# LSTM_model.py
+# LSTM 모델 작성, 훈련
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

@@ -1,3 +1,7 @@
+# 2020년도 3학년 2학기 LINC+ 캡스톤 디자인 프로젝트
+# model_predict.py
+# 최근 50일동안의 주가정보를 이용하여 다음 날 주가 예측
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

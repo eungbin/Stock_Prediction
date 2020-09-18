@@ -1,3 +1,7 @@
+# 2020년도 3학년 2학기 LINC+ 캡스톤 디자인 프로젝트
+# save_csv.py
+# Yahoo Finance API를 이용하여 최신 주가정보를 가져와, csv파일로 저장
+
 import datetime
 from pandas_datareader import data
 import pymysql

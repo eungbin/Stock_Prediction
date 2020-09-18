@@ -1,3 +1,7 @@
+# 2020년도 3학년 2학기 LINC+ 캡스톤 디자인 프로젝트
+# insert_db.py
+# csv파일을 이용하여 최신 주가정보를 DB에 저장
+
 import datetime
 import pymysql
 import pandas as pd

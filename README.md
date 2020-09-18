@@ -13,7 +13,7 @@
 + 현재까지 시스템 흐름
 + save_csv.py  [최신 주가정보 가져와 csv파일로 변환하여 저장] -> insert_db.py [변환한 csv파일을 로드하여 db에 저장] -> LSTM_model.py [최신 주가정보가 반영된 db를 기준으로 모델파일 생성] -> model_predict.py [생성된 모델파일을 이용하여 다음날 주가 예측]
 
-예정) 생성된 kears 모델 파일 tensorflow.js를 이용하여 javascript에서 사용 가능한 모델파일로 변환
+
 
 ------
 

@@ -31,14 +31,17 @@ now_str = now.strftime("%Y-%m-%d")
 #얘는 어제날짜
 yesterday = now + datetime.timedelta(days=-1)
 str_yesterday = yesterday.strftime("%Y-%m-%d")
-print(str_yesterday)
 # ----------------------- #
 
 
 # csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/'+now_str+'.csv')
 
 # pickle 이용하여 data.pickle 파일 load #
-load_pickle = pd.read_pickle('./modify-data.pickle')
+# load_pickle = pd.read_pickle('./modify-data.pickle')
+# ----------------------------------- #
+
+# 실제 사용할 종목 코드 pickle 파일 load #
+load_pickle = pd.read_pickle("read_data.pickle")
 # ----------------------------------- #
 
 # pickle 데이터를 이용하여 반복하여 테이블 생성 #
@@ -93,10 +96,10 @@ def updateDB(stock_code):
 
 # init_insert_DB("kospi")
 
-# DB 최신화 #
+# DB 최신화 [실행할 경우 각 종목별로 주가정보 업데이트] #
 # for code in load_pickle.values:
 #     updateDB(code[1])
-# --------- #
+# # ---------------------------------------------- #
 
 # 주식 종목이 존재하는지 확인 [DB이용] #
 # count = 0
@@ -122,11 +125,8 @@ def updateDB(stock_code):
 #
 # df_pickle = pd.DataFrame(dict_pickle)
 # print(df_pickle)
-load_real_data = pd.read_pickle("read_data.pickle")
-print(load_real_data)
-
-# with open ('real_data.pickle', "wb") as fw:
-#     pickle.dump(dict_pickle, fw)
+# df_pickle.to_pickle("파일명")
+# ------------------------------------- #
 
 # for code in modify_pickle.values:
 #     print("{0}  |  {1}".format(code[0], code[1]))

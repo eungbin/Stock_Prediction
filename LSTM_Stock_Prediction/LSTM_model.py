@@ -21,7 +21,7 @@ pymysql.converters.conversions.update(pymysql.converters.decoders)
 
 conn = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, db=DB)
 
-csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
+# csv_data = pd.read_csv('C:/dev/react/stock_predict/LSTM_Stock_Prediction/csv/005930.KS.csv')
 
 cursor = conn.cursor(pymysql.cursors.DictCursor)
 

@@ -94,8 +94,8 @@ def updateDB(stock_code):
 # init_insert_DB("kospi")
 
 # DB 최신화 #
-for code in load_pickle.values:
-    updateDB(code[1])
+# for code in load_pickle.values:
+#     updateDB(code[1])
 # --------- #
 
 # 주식 종목이 존재하는지 확인 [DB이용] #
@@ -112,6 +112,21 @@ for code in load_pickle.values:
 # modify_pickle = load_pickle.drop([load_pickle.index[739]])
 # pd.to_pickle(modify_pickle, './modify-data.pickle')
 # ------------------- #
+
+# 실제 사용할 데이터들 pickle파일로 만들기 #
+# dict_pickle = [{'kor_name': '삼성전자', 'ticker': '005930'},
+#                {'kor_name': 'LG전자', 'ticker': '066570'},
+#                {'kor_name': 'SK이노베이션', 'ticker': '096770'},
+#                {'kor_name': '기업은행', 'ticker': '024110'},
+#                {'kor_name': '기아자동차', 'ticker': '000270'},]
+#
+# df_pickle = pd.DataFrame(dict_pickle)
+# print(df_pickle)
+load_real_data = pd.read_pickle("read_data.pickle")
+print(load_real_data)
+
+# with open ('real_data.pickle', "wb") as fw:
+#     pickle.dump(dict_pickle, fw)
 
 # for code in modify_pickle.values:
 #     print("{0}  |  {1}".format(code[0], code[1]))

@@ -22,18 +22,26 @@ conn = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, db=DB
 
 cursor = conn.cursor(pymysql.cursors.DictCursor)
 
+load_pickle = pd.read_pickle("real_data.pickle")
+
 #--- DB에서 주가정보 불러오기 ---#
-sql = "select high, low from csv order by date desc limit 50"
-cursor.execute(sql)
+def load_db(code):
+    sql = "select high, low from `{0}` order by date desc limit 50".format(code)
+    cursor.execute(sql)
 
-rows = cursor.fetchall()
-mid_prices = []
-for i in rows:
-    mid_prices.append( (i['low'] + i['high'])/2 )
-
-print(mid_prices)
-conn.close()
+    rows = cursor.fetchall()
+    mid_prices = []
+    for i in rows:
+        mid_prices.append( (i['low'] + i['high'])/2 )
+    return mid_prices
 #------------------------------#
+
+# 여기서 종목코드 지정해주면 됨 #
+code = ""
+# -------------------------- #
+
+mid_prices = load_db(code)
+conn.close()
 
 seq_len = 49
 sequence_length = seq_len + 1
@@ -58,7 +66,7 @@ result = np.array(normalized_data)
 x_test = result[:]
 x_test = np.reshape(x_test, (1, x_test.shape[0], 1))
 
-model = load_model('C:/dev/react/stock_predict/LSTM_Stock_Prediction/models/stock_predict.h5')
+model = load_model('./models/{0}.h5'.format(code))
 model.summary()
 pred = model.predict(x_test)
 print(pred)

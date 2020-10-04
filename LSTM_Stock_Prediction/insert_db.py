@@ -41,7 +41,7 @@ str_yesterday = yesterday.strftime("%Y-%m-%d")
 # ----------------------------------- #
 
 # 실제 사용할 종목 코드 pickle 파일 load #
-load_pickle = pd.read_pickle("read_data.pickle")
+load_pickle = pd.read_pickle("real_data.pickle")
 # ----------------------------------- #
 
 # pickle 데이터를 이용하여 반복하여 테이블 생성 #

@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b03c8b98-c2b6-40f8-b32c-b978329f6e13" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/LSTM_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insert_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_predict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/read_data.pickle" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,6 +29,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -40,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insert_db">
+  <component name="RunManager" selected="Python.LSTM_model">
     <configuration name="LSTM_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LSTM_Stock_Prediction" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -148,10 +151,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.insert_db" />
-        <item itemvalue="Python.save_csv" />
         <item itemvalue="Python.LSTM_model" />
         <item itemvalue="Python.model_predict" />
+        <item itemvalue="Python.insert_db" />
+        <item itemvalue="Python.save_csv" />
         <item itemvalue="Python.read_csv" />
       </list>
     </recent_temporary>

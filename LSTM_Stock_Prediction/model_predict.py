@@ -43,7 +43,7 @@ code = "005930"
 mid_prices = load_db(code)
 conn.close()
 
-seq_len = 49
+seq_len = 50
 sequence_length = seq_len + 1
 
 print(len(mid_prices))

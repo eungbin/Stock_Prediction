@@ -54,6 +54,7 @@ def model_create_and_run(code, price):
     for index in range(len(price) - sequence_length):
         result.append(price[index: index + sequence_length])
 
+    # 데이터 정규화
     normalized_data = []
     for window in result:
         normalized_window = [((float(p) / float(window[0])) - 1) for p in window]
@@ -61,6 +62,7 @@ def model_create_and_run(code, price):
 
     result = np.array(normalized_data)
 
+    # train데이터와 test데이터 나누는 과정
     row = int(round(result.shape[0] * 0.9))
     train = result[:row, :]
     np.random.shuffle(train)
@@ -73,6 +75,7 @@ def model_create_and_run(code, price):
     x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
     y_test = result[row:, -1]
 
+    # LSTM 모델 설계
     model = Sequential()
     model.add(CuDNNLSTM(50, return_sequences=True, input_shape=(50, 1)))
     model.add(CuDNNLSTM(64, return_sequences=False))
@@ -80,12 +83,15 @@ def model_create_and_run(code, price):
     model.compile(loss='mse', optimizer='rmsprop')
     model.summary()
 
+    # 모델 훈련
     model.fit(x_train, y_train,
               validation_data=(x_test, y_test),
               batch_size=10,
               epochs=20)
 
+    # 가중치파일 저장
     model.save('./models/{0}.h5'.format(code))
 
+# 5개 종목에 대한 모델 훈련 반복문
 for code, price in zip(load_pickle.values, mid_prices):
     model_create_and_run(code[1], price)

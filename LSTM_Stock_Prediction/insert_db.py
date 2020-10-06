@@ -57,6 +57,7 @@ def init_insert_DB(market):
     for file_name in file_list:
         file = pd.read_csv(file_name)
         real_file_name = file_name[8:14]
+        print(file_name)
         for date, high, low in zip(file['Date'], file['High'], file['Low']):
             integer_high = int(high)
             integer_low = int(low)
@@ -97,8 +98,8 @@ def updateDB(stock_code):
 # init_insert_DB("kospi")
 
 # DB 최신화 [실행할 경우 각 종목별로 주가정보 업데이트] #
-# for code in load_pickle.values:
-#     updateDB(code[1])
+for code in load_pickle.values:
+    updateDB(code[1])
 # # ---------------------------------------------- #
 
 # 주식 종목이 존재하는지 확인 [DB이용] #

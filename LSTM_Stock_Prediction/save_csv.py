@@ -99,7 +99,7 @@ print(kospi_3)
 #
 #
 # def save_kospi():
-#     for stock in kospi_array_7:
+#     for stock in kospi_array:
 #         kor_name = stock[0]
 #         ticker = stock[1]
 #         df = data.get_data_yahoo(ticker + '.KS', start_date, now_str)

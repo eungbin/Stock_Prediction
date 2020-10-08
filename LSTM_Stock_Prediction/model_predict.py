@@ -37,37 +37,43 @@ def load_db(code):
 #------------------------------#
 
 # 여기서 종목코드 지정해주면 됨 #
-code = "005930"
+# code = "005930"
 # -------------------------- #
+# 모델 예측 함수 #
+def model_predict(code):
+    mid_prices = load_db(code)
 
-mid_prices = load_db(code)
+    seq_len = 50
+    sequence_length = seq_len + 1
+
+    print(len(mid_prices))
+    result = []
+
+    for i in mid_prices:
+        result.append(i)
+
+    result.reverse()
+
+    origin = result[0]
+
+    normalized_data = []
+    for window in result:
+        normalized_window = [(float(window) / float(result[0]) - 1)]
+        normalized_data.append(normalized_window)
+
+    result = np.array(normalized_data)
+
+    x_test = result[:]
+    x_test = np.reshape(x_test, (1, x_test.shape[0], 1))
+
+    model = load_model('./models/{0}.h5'.format(code))
+    model.summary()
+    pred = model.predict(x_test)
+    print(pred)
+    print("result : ", (pred+1)*origin)
+# ------------ #
+
+for code in load_pickle.values:
+    model_predict(code[1])
+
 conn.close()
-
-seq_len = 50
-sequence_length = seq_len + 1
-
-print(len(mid_prices))
-result = []
-
-for i in mid_prices:
-    result.append(i)
-
-result.reverse()
-
-origin = result[0]
-
-normalized_data = []
-for window in result:
-    normalized_window = [(float(window) / float(result[0]) - 1)]
-    normalized_data.append(normalized_window)
-
-result = np.array(normalized_data)
-
-x_test = result[:]
-x_test = np.reshape(x_test, (1, x_test.shape[0], 1))
-
-model = load_model('./models/{0}.h5'.format(code))
-model.summary()
-pred = model.predict(x_test)
-print(pred)
-print("result : ", (pred+1)*origin)

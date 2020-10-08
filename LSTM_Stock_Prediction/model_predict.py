@@ -46,7 +46,7 @@ def model_predict(code):
     seq_len = 50
     sequence_length = seq_len + 1
 
-    print(len(mid_prices))
+    # print(len(mid_prices))
     result = []
 
     for i in mid_prices:
@@ -70,10 +70,17 @@ def model_predict(code):
     model.summary()
     pred = model.predict(x_test)
     print(pred)
-    print("result : ", (pred+1)*origin)
+    pred_result = (pred+1)*origin
+    print("{0}'s result : ".format(code), pred_result)
+    return pred_result
 # ------------ #
 
-for code in load_pickle.values:
-    model_predict(code[1])
+arr_result = []
 
+for code in load_pickle.values:
+    arr_result.append(model_predict(code[1]))
+print("Predict Result")
+
+for data in arr_result:
+    print(data)
 conn.close()

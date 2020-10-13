@@ -37,7 +37,7 @@ def load_db(code):
 #------------------------------#
 
 # 여기서 종목코드 지정해주면 됨 #
-# code = "005930"
+code = "005930"
 # -------------------------- #
 # 모델 예측 함수 #
 def model_predict(code):
@@ -84,24 +84,24 @@ def insert_db(dict_result, code_list):
 arr_result = []
 
 # 예측 함수를 실행하여 배열에 결과 저장 #
-for code in load_pickle.values:
-    arr_result.append(int(model_predict(code[1])[0][0]))
+# for code in load_pickle.values:
+#     arr_result.append(int(model_predict(code[1])[0][0]))
 # --------------------------------- #
 print("Predict Result")
 # 예측결과를 종목코드와 쌍으로 딕셔너리 생성 #
-dict_result = {}
-for data, code in  zip(arr_result, load_pickle.values):
-    dict_result[code[1]] = data
+# dict_result = {}
+# for data, code in  zip(arr_result, load_pickle.values):
+#     dict_result[code[1]] = data
+#
+# for test in dict_result:
+#     print(dict_result[test])
 
-for test in dict_result:
-    print(dict_result[test])
-
-sql = "select exists(select * from `005930` where date = '2020-09-07')"
+sql = "select exists(select * from `{0}` where date = '2020-09-07')".format(code)
 cursor.execute(sql)
 
 row = cursor.fetchone()
 print(row)
-indexing_sql = sql[14:]
+indexing_sql = sql[14:-1]   # select * from `005930` where date = '2020-09-07'
 print(indexing_sql)
 
 conn.close()

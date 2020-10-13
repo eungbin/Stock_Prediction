@@ -78,6 +78,14 @@ def model_predict(code):
 # 예측 결과를 DB에 저장해주는 함수 #
 def insert_db(dict_result, code_list):
     for code, result in zip(code_list, dict_result):
+        sql = "select exists(select * from `{0}` where date = '2020-09-07')".format(code[1])
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        indexing_sql = sql[7:]  # exists(select * from `005930` where date = '2020-09-07')
+        if(row[indexing_sql] == 1):
+            sql = "delete from pred_result where code={0}".format(code[1])
+            cursor.execute(sql)
+
         sql = "insert into pred_result values(%s, %s)" #아마 주식코드 + 값
         cursor.execute(sql, (code[1], dict_result[result]))
 
@@ -100,8 +108,8 @@ sql = "select exists(select * from `{0}` where date = '2020-09-07')".format(code
 cursor.execute(sql)
 
 row = cursor.fetchone()
-print(row)
-indexing_sql = sql[14:-1]   # select * from `005930` where date = '2020-09-07'
+indexing_sql = sql[7:]      # exists(select * from `005930` where date = '2020-09-07')
+print("result : " + str(row[indexing_sql]))
 print(indexing_sql)
 
 conn.close()

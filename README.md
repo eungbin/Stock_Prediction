@@ -40,6 +40,8 @@
   
 + 2020.10.14  -->  LSTM 주가예측값 DB저장 완료 -Plan B Python part 끝-
 
++ 수정사항) 기존DB date, high, low 3개  ==> + open close volume 총 6개 column
+
 
 
 ------
@@ -47,5 +49,4 @@
 #### React.js Part
 
 + 2020.09.14  -->  React.js 프로젝트 생성
-
-예정) 프론트 디자인 + 백엔드 node.js 연결 + MySQL
++ 2020.10.14  -->  Reach - Node - MySQL 연동

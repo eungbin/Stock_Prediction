@@ -47,7 +47,8 @@ load_pickle = pd.read_pickle("real_data.pickle")
 # pickle 데이터를 이용하여 반복하여 테이블 생성 #
 # for data in load_pickle.values:
 #     csv_data = pd.read_csv('./kospi/' + data[1] + '.csv')
-#     sql = "create table `%s`(date date not null primary key, high int(11) not null, low int(11) not null)"%(data[1])
+#     sql = "create table `%s`(date date not null primary key, high int(11) not null, low int(11) not null, " \
+#           "open int(11) not null, close int(11) not null, volume bigint(11) not null)"%(data[1])
 #     cursor.execute(sql)
 # ----------------------------------------- #
 
@@ -58,12 +59,15 @@ def init_insert_DB(market):
         file = pd.read_csv(file_name)
         real_file_name = file_name[8:14]
         print(file_name)
-        for date, high, low in zip(file['Date'], file['High'], file['Low']):
+        for date, high, low, open, close, volume in zip(file['Date'], file['High'], file['Low'], file['Open'], file['Close'], file['Volume']):
             integer_high = int(high)
             integer_low = int(low)
+            integer_open = int(open)
+            integer_close = int(close)
+            integer_volume = int(volume)
             convert_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-            sql = "insert into `{0}` values(%s, %s, %s)".format(real_file_name)
-            cursor.execute(sql, (convert_date, integer_high, integer_low))
+            sql = "insert into `{0}` values(%s, %s, %s, %s, %s, %s)".format(real_file_name)
+            cursor.execute(sql, (convert_date, integer_high, integer_low, integer_open, integer_close, integer_volume))
         print("{0}.csv insert completed!!".format(real_file_name))
 # -------------------------------------------------------- #
 count = 0

@@ -84,10 +84,11 @@ def updateDB(stock_code):
         update_data = data.get_data_yahoo(stock_code+".ks", str_row_date, now_str)
         print(update_data.index)
         print(update_data['High'].values)
-        for date, high, low in zip(update_data.index, update_data['High'], update_data['Low']):
+        for date, high, low, open, close, volume in zip(update_data.index, update_data['High'], update_data['Low'],
+                                                        update_data['Open'], update_data['Close'], update_data['Volume']):
             convert_date = datetime.datetime.strftime(date, "%Y-%m-%d")
-            sql = "insert into `{0}` values(%s, %s, %s)".format(stock_code)
-            cursor.execute(sql, (convert_date, high, low))
+            sql = "insert into `{0}` values(%s, %s, %s, %s, %s, %s)".format(stock_code)
+            cursor.execute(sql, (convert_date, high, low, open, close, volume))
         print("{0}  |  {1} is complete".format(count, stock_code))
         count += 1
 

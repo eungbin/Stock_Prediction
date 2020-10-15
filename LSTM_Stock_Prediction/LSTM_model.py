@@ -28,20 +28,20 @@ cursor = conn.cursor(pymysql.cursors.DictCursor)
 
 # --- DB에서 주가정보 불러오기 ---#
 def load_db(code):
-    sql = "select high, low from `{0}`".format(code)
+    sql = "select close from `{0}`".format(code)
     cursor.execute(sql)
 
     rows = cursor.fetchall()
-    mid_prices = []
+    close_prices = []
     for i in rows:
-        mid_prices.append((i['low'] + i['high']) / 2)
-    return mid_prices
+        close_prices.append(i['close'])
+    return close_prices
 # ------------------------------#
 
 # 배열에 모두저장 #
-mid_prices = []
+close_prices = []
 for code in load_pickle.values:
-    mid_prices.append(load_db(code[1]))
+    close_prices.append(load_db(code[1]))
 # ------------- #
 
 conn.close()
@@ -93,5 +93,5 @@ def model_create_and_run(code, price):
     model.save('./models/{0}.h5'.format(code))
 
 # 5개 종목에 대한 모델 훈련 반복문
-for code, price in zip(load_pickle.values, mid_prices):
+for code, price in zip(load_pickle.values, close_prices):
     model_create_and_run(code[1], price)

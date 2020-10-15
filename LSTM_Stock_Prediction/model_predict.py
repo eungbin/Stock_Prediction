@@ -26,14 +26,14 @@ load_pickle = pd.read_pickle("real_data.pickle")
 
 #--- DB에서 주가정보 불러오기 ---#
 def load_db(code):
-    sql = "select high, low from `{0}` order by date desc limit 50".format(code)
+    sql = "select close from `{0}` order by date desc limit 50".format(code)
     cursor.execute(sql)
 
     rows = cursor.fetchall()
-    mid_prices = []
+    close_prices = []
     for i in rows:
-        mid_prices.append( (i['low'] + i['high'])/2 )
-    return mid_prices
+        close_prices.append( i['close'] )
+    return close_prices
 #------------------------------#
 
 # 여기서 종목코드 지정해주면 됨 #
@@ -41,7 +41,7 @@ code = "005930"
 # -------------------------- #
 # 모델 예측 함수 #
 def model_predict(code):
-    mid_prices = load_db(code)
+    close_prices = load_db(code)
 
     seq_len = 50
     sequence_length = seq_len + 1
@@ -49,7 +49,7 @@ def model_predict(code):
     # print(len(mid_prices))
     result = []
 
-    for i in mid_prices:
+    for i in close_prices:
         result.append(i)
 
     result.reverse()

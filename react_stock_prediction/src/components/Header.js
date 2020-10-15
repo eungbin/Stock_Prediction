@@ -6,16 +6,16 @@ function App() {
   return (
     <>
         <header>
-            <h1>Title</h1>
+            <h1>Stock BOT</h1>
             <nav>
                 <div className="first-menu menu">
                     <Button>Menu1</Button>
                 </div>
                 <div className="second-menu menu">
-                    <Button>Menu2</Button>
+                    <Button>Request Board</Button>
                 </div>
                 <div className="third-menu menu">
-                    <Button>Menu3</Button>
+                    <Button>Change Item</Button>
                 </div>
             </nav>
         </header>

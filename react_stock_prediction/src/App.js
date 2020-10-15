@@ -6,23 +6,29 @@ import axios from 'axios';
 
 function App() {
   const [testState, setTestState] = useState({
-    high: [],
+    close: [],
+    date: [],
   })
   useEffect(() =>  {
     axios.get("http://localhost:3001/data")
       .then(res => {
+        let arr_date = []
+        let arr_close = []
         console.log(res.data)
+        console.log(res.data[0].date)
+        res.data.map(data => {
+          arr_date.push(data.date)
+          arr_close.push(data.close)
+        })
         setTestState({
-          high: res.data
+          close: arr_close,
+          date: arr_date,
         })
       })
-    
-      console.log("test")
-      console.log(testState)
   }, []);
 
   const test_state = () => {
-    console.log(testState.high)
+    console.log(testState.close)
   }
 
   const get_pred_result = () => {
@@ -38,7 +44,7 @@ function App() {
         <Header />
       </div>
       <div className="App-Body">
-        <Main />
+        <Main date={testState.date} close={testState.close}/>
         <button onClick={test_state}>Test</button>
       </div>
     </div>

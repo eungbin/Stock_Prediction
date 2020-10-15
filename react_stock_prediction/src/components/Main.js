@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './../css/Main.css';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Chart from './chart';
 
-function App() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
+
+function Main(props) {
+  const test_state = () => {
+    console.log(props.close)
+  }
+
+  const classes = useStyles();
   return (
     <>
-        Body
+      <table border="1" width="100%" height="500px">
+          <tr>
+            <td rowSpan="2" width="60%"><Chart date={props.date} close={props.close}/></td>
+            <td>d</td>
+          </tr>
+
+          <tr>
+            <td><button onClick={test_state}>Test</button></td>
+          </tr>
+      </table>
     </>
   );
 }
 
-export default App;
+export default Main;

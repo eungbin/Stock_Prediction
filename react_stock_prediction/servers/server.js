@@ -32,7 +32,7 @@ app.get('/pred_result', function (req, res) {
 });
 
 app.get('/data', function (req, res) {
-    connection.query("select high from `005930` order by date", function (error, result, fields) {
+    connection.query("select date, close from `005930` order by date", function (error, result, fields) {
         if(error) {
             res.send("err: " + error);
         } else {

@@ -46,7 +46,7 @@ for code in load_pickle.values:
 
 conn.close()
 
-def model_create_and_run(code, price):
+def model_create_and_run(code, price): #모델 정의, 데이터 전처리, 훈련
     seq_len = 50
     sequence_length = seq_len + 1
 

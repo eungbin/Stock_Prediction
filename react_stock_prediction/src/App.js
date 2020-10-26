@@ -3,19 +3,39 @@ import './App.css';
 import Main from './components/Main';
 import Header from './components/Header';
 import axios from 'axios';
+import Request from './components/Board/RequestBoard';
+import Change from './components/Change/ChangeItem';
+import Detail from './components/Board/DetailBoard';
 
 function App() {
   const [testState, setTestState] = useState({
     close: [],
     date: [],
   })
+
+  const [codeState, setCodeState] = useState({
+    code: '005930',
+  })
+
+  const [pageState, setPageState] = useState({
+    page: 'Main',
+  })
+
+  const [boardState, setBoardState] = useState({
+    board: {},
+  })
+
   useEffect(() =>  {
-    axios.get("http://localhost:3001/data")
+    console.log(codeState.code)
+    axios.get("http://localhost:3001/data", {
+        params: {
+          code: codeState.code,
+        }
+      })
       .then(res => {
         let arr_date = []
         let arr_close = []
         console.log(res.data)
-        console.log(res.data[0].date)
         res.data.map(data => {
           arr_date.push(data.date)
           arr_close.push(data.close)
@@ -27,8 +47,24 @@ function App() {
       })
   }, []);
 
+  const onHeaderSubmit = async (header) => {
+    await setPageState({
+      page: header,
+    })
+  };
+
+  const onRequestBoardSubmit = async (board) => {
+    await setPageState({
+      page: "DetailBoard",
+    })
+    
+    await setBoardState({
+      board: board,
+    })
+  }
+
   const test_state = () => {
-    console.log(testState.close)
+    console.log(pageState.page)
   }
 
   const get_pred_result = () => {
@@ -41,11 +77,14 @@ function App() {
   return (
     <div className="mapWrapper">
       <div className="App-Header">
-        <Header />
+        <Header onSubmit={onHeaderSubmit} />
       </div>
       <div className="App-Body">
-        <Main date={testState.date} close={testState.close}/>
-        <button onClick={test_state}>Test</button>
+        {pageState.page === "Main" && <Main date={testState.date} close={testState.close} />}
+        {pageState.page === "Request" && <Request onSubmit={onRequestBoardSubmit} />}
+        {pageState.page === "Change" && <Change code={codeState.code} />}
+        {pageState.page === "DetailBoard" && <Detail board={boardState.board} />}
+        {/* <button onClick={test_state}>Test</button> */}
       </div>
     </div>
   );

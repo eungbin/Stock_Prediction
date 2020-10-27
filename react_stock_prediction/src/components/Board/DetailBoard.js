@@ -1,56 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.common.white,
-        color: theme.palette.common.black,
-      },
-      body: {
-        fontSize: 14,
-      },
-  }))(TableCell);
-  
-  const StyledTableRow = withStyles((theme) => ({
-    root: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-      },
-    },
-  }))(TableRow);
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-    table: {
-      minWidth: 700,
-    },
+  root: {
+    flex: "none",
+    align: "left",
+    width: 300,
+    alignContent: "left",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+    alignContent: "left",
+  },
 });
 
-export default function DetailBoard() {
-    const classes = useStyles();
-    const [ boardState, setBoardState ] = useState({
-        data: [],
-    });
+function DetailBoard(props) {
+  const classes = useStyles();
 
-    return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableBody>
-                    <TableRow>
-                        <StyledTableCell>번호</StyledTableCell>
-                        <StyledTableCell>제목</StyledTableCell>
-                        <StyledTableCell>작성자</StyledTableCell>
-                        <StyledTableCell>상태</StyledTableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+  const [ boardState, setBoardState ] = useState({
+    board: {},
+  })
+
+  useEffect(() =>  {
+    setBoardState({
+      board: props.board,
+    })
+  }, [props]);
+
+  const testState = () => {
+    console.log(props.board)
+    console.log(boardState.board)
+  }
+
+  return (
+    <Card className={classes.root}>
+        <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                번호 : {boardState.board.no}
+            </Typography>
+            <Typography className={classes.pos}>
+                제목 : {boardState.board.title}
+            </Typography>
+            <Typography className={classes.pos}>
+                작성자 : {boardState.board.writer}
+            </Typography>
+            <Typography variant="body2" component="p">
+                내용 : {boardState.board.inner}
+                <br />
+            </Typography>
+        </CardContent>
+        <CardActions>
+            <Button size="small" onClick={testState}>TEST</Button>
+        </CardActions>
+    </Card>
+  );
 }
+
+export default DetailBoard;

@@ -3,18 +3,29 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Chart } from "react-google-charts";
 
-function chart(props) {
+function Showchart(props) {
     const [ chartState, setChartState ] = useState({
         date: [],
         price: [],
     })
-    
+
     useEffect(() =>  {
         setChartState({
             date: props.date,
             price: props.close,
         })
     }, [props]);
+
+    const data = [
+        ["Date", "Price"],
+        [chartState.date, chartState.price]
+      ];
+    const options = {
+        title: "Company Performance",
+        curveType: "function",
+        legend: { position: "bottom" }
+    };
+
     // const series2 = props.close;    //App.js에서 데이터를 보내줄 예정
     // const date = props.date;
     // const options = {
@@ -55,13 +66,13 @@ function chart(props) {
             {/* <HighchartsReact highcharts={Highcharts} options={options} /> */}
             <Chart
                 chartType="LineChart"
-                data={[["Date", "Price"], chartState.date, chartState.price]}
+                data={data}
                 width="600px"
                 height="400px"
-                legendToggle
+                options={options}
             />
         </>
     );
 }
 
-export default chart;
+export default Showchart;

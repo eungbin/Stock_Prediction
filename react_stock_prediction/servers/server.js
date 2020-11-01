@@ -62,6 +62,50 @@ app.get('/changeList', function (req, res) {
     })
 })
 
+app.post('/register', function (req, res) {
+    let id = ""
+    connection.query("select id from user where id=?", req.body.id, function (error, result, fields) {
+        if(error) {
+            res.send(error);
+        } else {
+            id = result
+            if(id == "") {
+                console.log("result가 빈값이네? 통과");
+            } else {
+                console.log("아이디 중복");
+                res.send(false);
+                return
+            }
+
+            connection.query("insert into user values(?, ?)", [req.body.id, req.body.passowrd], function (error, result) {
+                console.log("회원가입 완료");
+                res.send(true);
+            })
+        }
+    })
+})
+
+app.post('/login', function (req, res) {
+    let id = "";
+    connection.query("select id from user where id=? and password=?", [req.body.id, req.body.password], function (error, result, fields) {
+        if(error) {
+            res.send(error);
+        } else {
+            console.log(result)
+            id = result
+            if(id == "") {
+                console.log("아이디나 비밀번호 틀린듯");
+                res.send(false);
+                return
+            } else {
+                console.log("로그인 성공");
+                res.send(true);
+                return
+            }
+        }
+    })
+})
+
 
 
 app.listen(port, ()=>{

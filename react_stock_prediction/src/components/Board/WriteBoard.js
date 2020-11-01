@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import './../../css/DetailBoard.css';
 
 const useStyles = makeStyles({
   root: {
@@ -21,47 +20,29 @@ const useStyles = makeStyles({
   },
 });
 
-function DetailBoard(props) {
+function WriteBoard(props) {
   const classes = useStyles();
 
-  const [ boardState, setBoardState ] = useState({
-    board: {},
-  })
-
-  useEffect(() =>  {
-    setBoardState({
-      board: props.board,
-    })
-  }, [props]);
-
-  const testState = () => {
-    console.log(props.board)
-    console.log(boardState.board)
+  const writeBoard = () => {
+      console.log("test")
   }
 
   return (
     <Card className={classes.root}>
         <CardContent className={classes.test}>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                번호 : {boardState.board.no}
-            </Typography>
             <Typography className={classes.pos}>
-                제목 : {boardState.board.title}
-            </Typography>
-            <Typography className={classes.pos}>
-                작성자 : {boardState.board.writer}
+                제목 : <input type="text" id="title" />
             </Typography>
             <Typography variant="body2" component="p">
-                내용 : {boardState.board.inner}
+                내용 : <input type="text" id="inner" />
                 <br />
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={testState}>TEST</Button>
-            <Button size="small" onClick={testState}>TEST</Button>
+            <Button size="small" onClick={writeBoard}>작성</Button>
         </CardActions>
     </Card>
   );
 }
 
-export default DetailBoard;
+export default WriteBoard;

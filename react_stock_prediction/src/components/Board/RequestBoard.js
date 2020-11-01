@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -65,6 +66,14 @@ export default function RequestBoard(props) {
         props.onSubmit(boardInfo)
     }
 
+    const writeBoard = () => {
+      if(sessionStorage.loginStat === "false") {
+        alert("로그인 후 작성 가능합니다.")
+      } else {
+        props.goWriteBoard()
+      }
+    }
+
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
@@ -89,6 +98,7 @@ export default function RequestBoard(props) {
                 ))}
                 </TableBody>
             </Table>
+            <Button onClick={writeBoard}>글 작성</Button>
         </TableContainer>
     );
 }

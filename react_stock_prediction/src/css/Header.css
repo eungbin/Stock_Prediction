@@ -23,5 +23,21 @@ header {
 }
 
 .third-menu {
+    border-right: 2px solid gray;
     padding-left: 40px;
+    padding-right: 40px;
+}
+
+.fourth-menu {
+    border-right: 2px solid gray;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.fifth-menu {
+    padding-left: 40px;
+}
+
+.sixth-menu {
+    padding-right: 20px;
 }

@@ -83,7 +83,7 @@ function Register(props) {
                 아이디 : <input type="text" name="id" placeholder="아이디" onChange={(e) => idUpdate(e)} />
             </Typography>
             <Typography className={classes.pos}>
-                비밀번호 : <input type="text" name="password" placeholder="비밀번호" onChange={(e) => passwordUpdate(e)} />
+                비밀번호 : <input type="password" name="password" placeholder="비밀번호" onChange={(e) => passwordUpdate(e)} />
             </Typography>
         </CardContent>
         <CardActions>

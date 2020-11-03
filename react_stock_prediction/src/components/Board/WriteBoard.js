@@ -24,6 +24,10 @@ const useStyles = makeStyles({
 function WriteBoard(props) {
   const classes = useStyles();
 
+  useEffect(() =>  {
+    console.log(props.boardInfo.title)
+  }, [props]);
+
   const [titleState, setTitleState] = useState({
     title: "",
   })
@@ -53,7 +57,11 @@ function WriteBoard(props) {
         if(!(res.data)) {
 
         } else {
-            alert("글작성 완료")
+            if(props.boardInfo.title === undefined) {
+              alert("글작성 완료")
+            } else {
+              alert("수정 완료")
+            }
             props.onSubmit("Request")
         }
     })

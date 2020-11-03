@@ -26,6 +26,7 @@ export default function SimpleCard(props) {
   const classes = useStyles();
 
   const changeCode = () => {
+    alert(props.code + ".KS 항목으로 변경 완료")
     props.onSubmit(props.code)
   }
 

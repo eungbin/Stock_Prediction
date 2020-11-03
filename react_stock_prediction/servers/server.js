@@ -71,16 +71,20 @@ app.post('/register', function (req, res) {
             id = result
             if(id == "") {
                 console.log("result가 빈값이네? 통과");
+                connection.query("insert into user(`id`, `password`) values(?, ?)", [req.body.id, req.body.password], function (error, result, fields) {
+                    if (error) {
+                        console.log(error);
+                        res.send(error);
+                    } else {
+                        console.log("회원가입 완료");
+                        res.send(true);
+                    }
+                })
             } else {
                 console.log("아이디 중복");
                 res.send(false);
                 return
             }
-
-            connection.query("insert into user values(?, ?)", [req.body.id, req.body.passowrd], function (error, result) {
-                console.log("회원가입 완료");
-                res.send(true);
-            })
         }
     })
 })
@@ -102,6 +106,31 @@ app.post('/login', function (req, res) {
                 res.send(true);
                 return
             }
+        }
+    })
+})
+
+app.post('/writeboard', function(req, res) {
+    connection.query("insert into board(`title`, `inner`, `writer`) values(?, ?, ?)", 
+    [req.body.title, req.body.inner, req.body.id], function (error, result, fields) {
+        if(error) {
+            res.send(error);
+        } else {
+            console.log("글작성 완료");
+            res.send(true);
+        }
+    })
+})
+
+app.post('/deleteboard', function(req, res) {
+    console.log(req.body.board.board.no);
+
+    connection.query("delete from board where no = ?", req.body.board.board.no, function (error, result) {
+        if(error) {
+            res.send(error);
+        } else {
+            console.log("삭제 완료");
+            res.send(true);
         }
     })
 })

@@ -44,7 +44,6 @@ export default function RequestBoard(props) {
         axios.get("http://localhost:3001/request_board")
           .then(res => {
             let list_board = []
-            console.log(res.data)
             res.data.map(data => {
               list_board.push(data)
             })
@@ -67,10 +66,10 @@ export default function RequestBoard(props) {
     }
 
     const writeBoard = () => {
-      if(sessionStorage.loginStat === "false") {
-        alert("로그인 후 작성 가능합니다.")
-      } else {
+      if(sessionStorage.loginStat === "true") {
         props.goWriteBoard()
+      } else {
+        alert("로그인 후 작성 가능합니다.")
       }
     }
 

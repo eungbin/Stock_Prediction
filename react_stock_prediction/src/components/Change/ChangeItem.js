@@ -1,16 +1,15 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import Card from './Card';
+import Cards from './Card';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-        width: "100%",
-        height: "100%",
-        display: "flex",
-    },
-});
+        flexGrow: 1,
+      },
+}));
 
 function ChangeItem(props) {
     const classes = useStyles();
@@ -40,13 +39,18 @@ function ChangeItem(props) {
           })
       }, []);
 
+
     return (
         <>
-            <div className={classes.root} >
-                {changeList.list.map((data) => 
-                    (
-                    <Card key={data.code} code={data.code} />
-                ))}
+            <div className={classes.root}>
+                <Grid container spacing={3}>
+                    {changeList.list.map((data) => 
+                        (
+                            <Grid item xs={3} key={data.code}>
+                                <Cards key={data.code} code={data.code} onSubmit={props.onSubmit}/>
+                            </Grid>
+                    ))}
+                </Grid>
             </div>
         </>
     );

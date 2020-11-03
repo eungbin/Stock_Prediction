@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -23,23 +24,54 @@ const useStyles = makeStyles({
 function WriteBoard(props) {
   const classes = useStyles();
 
-  const writeBoard = () => {
-      console.log("test")
+  const [titleState, setTitleState] = useState({
+    title: "",
+  })
+
+  const [innerState, setInnerState] = useState({
+    inner: "",
+  })
+
+  const titleUpdate = (e) => {
+    setTitleState({
+        title: e.target.value,
+    })
   }
 
+  const innerUpdate = (e) => {
+      setInnerState({
+          inner: e.target.value,
+      })
+  }
+
+  const write = () => {
+    axios.post("http://localhost:3001/writeboard", {
+        title: titleState.title,
+        inner: innerState.inner,
+        id: sessionStorage.getItem("id"),
+    }).then(res => {
+        if(!(res.data)) {
+
+        } else {
+            alert("글작성 완료")
+            props.onSubmit("Request")
+        }
+    })
+  }
+  
   return (
     <Card className={classes.root}>
         <CardContent className={classes.test}>
             <Typography className={classes.pos}>
-                제목 : <input type="text" id="title" />
+                제목 : <input type="text" id="title" value={props.boardInfo.title} onChange={(e) => titleUpdate(e)} />
             </Typography>
             <Typography variant="body2" component="p">
-                내용 : <input type="text" id="inner" />
+                내용 : <textarea rows="5" cols="20" id="inner" value={props.boardInfo.inner} onChange={(e) => innerUpdate(e)} />
                 <br />
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={writeBoard}>작성</Button>
+            <Button size="small" onClick={write}>작성</Button>
         </CardActions>
     </Card>
   );

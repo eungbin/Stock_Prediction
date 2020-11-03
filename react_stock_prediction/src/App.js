@@ -8,7 +8,7 @@ import Change from './components/Change/ChangeItem';
 import Detail from './components/Board/DetailBoard';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
-import Write from './components/Board/WriteBoard';
+import Writepage from './components/Board/WriteBoard';
 
 function App() {
   const [testState, setTestState] = useState({
@@ -64,6 +64,12 @@ function App() {
     await setPageState({
       page: header,
     })
+
+    if(header === "Request") {
+      setBoardState({
+        board: {},
+      })
+    }
   };
 
   const onRequestBoardSubmit = async (board) => {
@@ -78,7 +84,7 @@ function App() {
 
   const goWriteBoardSubmit = async () => {
     await setPageState({
-      page: "WriteBoard",
+      page: "Write",
     })
   }
 
@@ -91,6 +97,22 @@ function App() {
       id: id,
       password: password,
       loginState: loginStat,
+    })
+  }
+
+  const changePage = async(page) => {
+    await setPageState({
+      page: page,
+    })
+  }
+
+  const changeCode = async(code) => {
+    await setCodeState({
+      code: code,
+    })
+
+    await setPageState({
+      page: "Main",
     })
   }
 
@@ -111,13 +133,14 @@ function App() {
         <Header id={sessionStorage.getItem("id")} loginStat={sessionStorage.getItem("loginStat")} onSubmit={onHeaderSubmit} />
       </div>
       <div className="App-Body">
-        {pageState.page === "Main" && <Main date={testState.date} close={testState.close} />}
+        {/* {pageState.page === "Main" && <Main date={testState.date} close={testState.close} />} */}
+        {pageState.page === "Main" && <Main code={codeState.code} />}
         {pageState.page === "Request" && <Request onSubmit={onRequestBoardSubmit} goWriteBoard={goWriteBoardSubmit} />}
-        {pageState.page === "Change" && <Change code={codeState.code} />}
-        {pageState.page === "DetailBoard" && <Detail board={boardState.board} />}
-        {pageState.page === "Register" && <Register onSubmit={onHeaderSubmit} />}
+        {pageState.page === "Change" && <Change code={codeState.code} onSubmit={changeCode} />}
+        {pageState.page === "DetailBoard" && <Detail board={boardState.board} onSubmit={changePage} />}
+        {pageState.page === "Register" && <Register onSubmit={changePage} />}
         {pageState.page === "Login" && <Login onSubmit={onLoginSubmit} />}
-        {pageState.page === "Write" && <Write />}
+        {pageState.page === "Write" && <Writepage onSubmit={changePage} boardInfo={boardState.board} />}
         {/* <button onClick={test_state}>Test</button> */}
       </div>
     </div>

@@ -1,12 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     flex: "none",
     align: "left",
@@ -18,28 +15,28 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-});
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 export default function SimpleCard(props) {
   const classes = useStyles();
 
+  const changeCode = () => {
+    props.onSubmit(props.code)
+  }
+
   return (
-    <Card className={classes.root}>
-        <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                항목 변경 카드
-            </Typography>
-            <Typography className={classes.pos} variant="h5" component="h2">
-                {props.code}.KS
-            </Typography>
-            <Typography variant="body2" component="p">
-                {props.code}.KS(으)로 변경하기.
-                <br />
-            </Typography>
-        </CardContent>
-        <CardActions>
-            <Button size="small">Change Item</Button>
-        </CardActions>
-    </Card>
+    <>
+      <Paper className={classes.paper}>
+        <h3>항목 변경 카드</h3>
+        <h2>{props.code}.KS</h2>
+        <br />
+        <Button size="small" onClick={changeCode} >Change Item</Button>
+      </Paper>
+    </>
   );
 }

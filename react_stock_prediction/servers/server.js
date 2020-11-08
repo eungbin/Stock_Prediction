@@ -25,7 +25,6 @@ app.get('/pred_result', function (req, res) {
         if(error) {
             res.send('err: ' + error);
         } else {
-            console.log(result);
             res.send(result);
         }
     })
@@ -36,6 +35,7 @@ app.get('/data', function (req, res) {
         if(error) {
             res.send("err: " + error);
         } else {
+            console.log(result);
             res.send(result);
         }
     })

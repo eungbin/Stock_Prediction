@@ -1,60 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import './../css/Main.css';
-import { makeStyles } from '@material-ui/core/styles';
 import Chart from './chart';
 import axios from 'axios';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+import { CircularProgress } from '@material-ui/core';
 
 function Main(props) {
-  const [stockState, setStockState] = useState({
-    close: [],
-    date: [],
+  const [objStock, setObjStock] = useState({
+    data: [],
   })
+
+  const [loadingState, setLoadingState] = useState({
+    loading: true,
+  })
+
   useEffect(() =>  {
+    setLoadingState({
+      loading: true,
+    })
+
     axios.get("http://localhost:3001/data", {
         params: {
           code: props.code,
         }
       })
       .then(res => {
-        let arr_date = []
-        let arr_close = []
-        res.data.map(data => {
-          arr_date.push(data.date)
-          arr_close.push(data.close)
-        })
-        setStockState({
-          close: arr_close,
-          date: arr_date,
+        setObjStock({
+          data: res.data,
         })
       })
+    
+    setTimeout(function() {
+      setLoadingState({
+        loading: false,
+      })
+    }, 1500);
   }, []);
 
-  const test_state = () => {
-    console.log(props.code)
-  }
+  // const get_pred_result = () => {
+  //   let filtered = []
+  //   axios.get("http://localhost:3001/pred_result")
+  //     .then(res => {
+  //       filtered = res.data.filter(data => data.code === props.code)
+  //       console.log(filtered[0].pred)
+  //       return filtered[0].pred
+  //     })
+  // }
 
-  const classes = useStyles();
   return (
     <>
-      <table border="1" width="100%" height="500px">
+      <table border="0" width="100%" height="500px">
           <tr>
-            <td rowSpan="2" width="60%"><Chart date={stockState.date} close={stockState.close}/></td>
-            <td>d</td>
+            <td rowSpan="2" width="60%">{loadingState.loading === true ? <CircularProgress className="spinner" /> : <Chart data={objStock.data} />}</td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td><button onClick={test_state}>Test</button></td>
+            <td>
+            </td>
           </tr>
       </table>
     </>

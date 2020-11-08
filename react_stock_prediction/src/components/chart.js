@@ -1,46 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import Highcharts from "highcharts/highstock";
-import HighchartsReact from "highcharts-react-official";
-import { Chart } from "react-google-charts";
+import moment from "moment";
+import {
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  } from 'recharts';
 
 function Showchart(props) {
-    const series2 = props.close;    //App.js에서 데이터를 보내줄 예정
-    const date = props.date;
-    const options = {
-        // chart: {
-        //     type: 'line'		// line 차트. 아무 설정이 없으면 line chart가 된다.
-        // },
-        title: {
-            text: '종가 기준 주가 그래프'
-        },
-        // credits: {
-        //     enabled: false
-        // },
-        xAxis: {
-            type: 'date',
-            dateTimeLabelFormats: {
-                "day": date
-            },
-        },
-        // legend: {
-        //     reversed: true
-        // },
-        // plotOptions: {
-        //     series: {
-        //         stacking: 'normal',
-        //         dataLabels: {
-        //             enabled: false,
-        //             format: "<b>{point.y}</b>",
-        //         }
-        //     }
-        // },
-        series: [{ name: "Price", data: series2 }]
-    }
-    return (
-        <>
-            <HighchartsReact highcharts={Highcharts} constructorType="stockChart" options={options} />
-        </>
-    );
+    const [ chartData, setChartData ] = useState({
+        data: [],
+    })
+    useEffect(() =>  {
+        let modify = props.data
+        let i = 0
+
+        modify.map(data => {
+            data.date = moment(data.date).format('YYYY-MM-DD')
+            modify[i].date = data.date
+            i  = i + 1
+        })
+
+        setChartData({
+            data: modify,
+          })
+      }, [props]);
+      return (
+        <AreaChart
+          width={900}
+          height={400}
+          data={chartData.data}
+          margin={{
+            top: 10, right: 30, left: 0, bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Area type="monotone" dataKey="close" stroke="#8884d8" fill="#ffffff" />
+        </AreaChart>
+      );
 }
 
 export default Showchart;

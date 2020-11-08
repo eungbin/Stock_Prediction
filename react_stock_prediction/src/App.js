@@ -9,13 +9,9 @@ import Detail from './components/Board/DetailBoard';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Writepage from './components/Board/WriteBoard';
+import { Button } from '@material-ui/core';
 
 function App() {
-  const [testState, setTestState] = useState({
-    close: [],
-    date: [],
-  })
-
   const [codeState, setCodeState] = useState({
     code: '005930',
   })
@@ -34,26 +30,12 @@ function App() {
     loginStat: sessionStorage.loginStat,
   })
 
+  const [predResult, setPredResult] = useState({
+    pred_result: 0,
+  })
+
   useEffect(() =>  {
-    console.log(codeState.code)
-    axios.get("http://localhost:3001/data", {
-        params: {
-          code: codeState.code,
-        }
-      })
-      .then(res => {
-        let arr_date = []
-        let arr_close = []
-        console.log(res.data)
-        res.data.map(data => {
-          arr_date.push(data.date)
-          arr_close.push(data.close)
-        })
-        setTestState({
-          close: arr_close,
-          date: arr_date,
-        })
-      })
+
   }, []);
 
   const onHeaderSubmit = async (header, loginStat) => {
@@ -111,19 +93,24 @@ function App() {
       code: code,
     })
 
+    await setPredResult({
+      pred_result: 0,
+    })
+
     await setPageState({
       page: "Main",
     })
   }
 
-  const test_state = () => {
-    console.log(pageState.page)
-  }
-
-  const get_pred_result = () => {
-    axios.get("http://localhost:3001/pred_result")
+  const get_pred_result = async () => {
+    let filtered = []
+    await axios.get("http://localhost:3001/pred_result")
       .then(res => {
-        console.log(res.data)
+        filtered = res.data.filter(data => data.code === codeState.code)
+        console.log(filtered[0].pred)
+        setPredResult({
+          pred_result: filtered[0].pred,
+        })
       })
   }
 
@@ -133,7 +120,6 @@ function App() {
         <Header id={sessionStorage.getItem("id")} loginStat={sessionStorage.getItem("loginStat")} onSubmit={onHeaderSubmit} />
       </div>
       <div className="App-Body">
-        {/* {pageState.page === "Main" && <Main date={testState.date} close={testState.close} />} */}
         {pageState.page === "Main" && <Main code={codeState.code} />}
         {pageState.page === "Request" && <Request onSubmit={onRequestBoardSubmit} goWriteBoard={goWriteBoardSubmit} />}
         {pageState.page === "Change" && <Change code={codeState.code} onSubmit={changeCode} />}
@@ -141,7 +127,7 @@ function App() {
         {pageState.page === "Register" && <Register onSubmit={changePage} />}
         {pageState.page === "Login" && <Login onSubmit={onLoginSubmit} />}
         {pageState.page === "Write" && <Writepage onSubmit={changePage} boardInfo={boardState.board} />}
-        {/* <button onClick={test_state}>Test</button> */}
+        <Button onClick={get_pred_result} >클릭하여 예측결과 확인</Button> : {predResult.pred_result}
       </div>
     </div>
   );

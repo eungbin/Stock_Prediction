@@ -29,14 +29,15 @@ function WriteBoard(props) {
   }, [props]);
 
   const [titleState, setTitleState] = useState({
-    title: "",
+    title: props.boardInfo.title,
   })
 
   const [innerState, setInnerState] = useState({
-    inner: "",
+    inner: props.boardInfo.inner,
   })
 
   const titleUpdate = (e) => {
+    console.log(e.target.value)
     setTitleState({
         title: e.target.value,
     })
@@ -71,10 +72,10 @@ function WriteBoard(props) {
     <Card className={classes.root}>
         <CardContent className={classes.test}>
             <Typography className={classes.pos}>
-                제목 : <input type="text" id="title" value={props.boardInfo.title} onChange={(e) => titleUpdate(e)} />
+                제목 : <input type="text" id="title" value={titleState.title} onChange={(e) => titleUpdate(e)} />
             </Typography>
             <Typography variant="body2" component="p">
-                내용 : <textarea rows="5" cols="20" id="inner" value={props.boardInfo.inner} onChange={(e) => innerUpdate(e)} />
+                내용 : <textarea rows="5" cols="20" id="inner" value={innerState.inner} onChange={(e) => innerUpdate(e)} />
                 <br />
             </Typography>
         </CardContent>

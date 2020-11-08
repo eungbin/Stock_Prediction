@@ -57,10 +57,10 @@ function Login(props) {
     console.log(passwordState.password)
 
     if(idState.id === "") {
-        console.log("아이디를 입력해 주세요.")
+        alert("아이디를 입력해 주세요.")
         return
     } else if(passwordState.password === "") {
-        console.log("비밀번호를 입력해 주세요.")
+        alert("비밀번호를 입력해 주세요.")
         return
     }
 

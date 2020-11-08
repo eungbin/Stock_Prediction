@@ -70,8 +70,8 @@ app.post('/register', function (req, res) {
         } else {
             id = result
             if(id == "") {
-                console.log("result가 빈값이네? 통과");
-                connection.query("insert into user(`id`, `password`) values(?, ?)", [req.body.id, req.body.password], function (error, result, fields) {
+                connection.query("insert into user(`id`, `password`) values(?, ?)", 
+                [req.body.id, req.body.password], function (error, result, fields) {
                     if (error) {
                         console.log(error);
                         res.send(error);
@@ -91,7 +91,8 @@ app.post('/register', function (req, res) {
 
 app.post('/login', function (req, res) {
     let id = "";
-    connection.query("select id from user where id=? and password=?", [req.body.id, req.body.password], function (error, result, fields) {
+    connection.query("select id from user where id=? and password=?", 
+    [req.body.id, req.body.password], function (error, result, fields) {
         if(error) {
             res.send(error);
         } else {
@@ -130,6 +131,17 @@ app.post('/deleteboard', function(req, res) {
             res.send(error);
         } else {
             console.log("삭제 완료");
+            res.send(true);
+        }
+    })
+})
+
+app.post('/boardstate', function(req, res){
+    connection.query("update board set status = ? where no = ?", [req.body.state, req.body.no], function (error, result) {
+        if(error) {
+            res.send(error);
+        } else {
+            console.log("변경 완료");
             res.send(true);
         }
     })

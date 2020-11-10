@@ -35,7 +35,6 @@ app.get('/data', function (req, res) {
         if(error) {
             res.send("err: " + error);
         } else {
-            console.log(result);
             res.send(result);
         }
     })
@@ -119,6 +118,28 @@ app.post('/writeboard', function(req, res) {
         } else {
             console.log("글작성 완료");
             res.send(true);
+        }
+    })
+})
+
+app.post('/modifyboard', function(req, res) {
+    connection.query("update board set title=? where no=?",
+    [req.body.title, req.body.no], function(error, result) {
+        if(error) {
+            console.log(error);
+            res.send(error);
+        } else {
+            console.log("제목 수정 완료");
+            connection.query("update board set `inner`=? where no=?",
+            [req.body.inner, req.body.no], function(error, result) {
+                if(error) {
+                    console.log(error);
+                    res.send(error);
+                } else {
+                    console.log("내용 수정 완료");
+                    res.send(true);
+                }
+            })
         }
     })
 })

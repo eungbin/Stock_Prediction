@@ -49,7 +49,7 @@ function DetailBoard(props) {
   }
 
   const updateBoard = () => {
-    props.onSubmit("Write")
+    props.goUpdate("Write", "Update")
   }
 
   const notCheck = () => {

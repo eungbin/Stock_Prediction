@@ -30,6 +30,10 @@ function App() {
     loginStat: sessionStorage.loginStat,
   })
 
+  const [writeState, setWriteState] = useState({
+    state: '',
+  })
+
   const [predResult, setPredResult] = useState({
     pred_result: 0,
   })
@@ -65,6 +69,9 @@ function App() {
   }
 
   const goWriteBoardSubmit = async () => {
+    await setWriteState({
+      state: "Write",
+    })
     await setPageState({
       page: "Write",
     })
@@ -114,6 +121,15 @@ function App() {
       })
   }
 
+  const updateBoard = async (page) => {
+    await setWriteState({
+      state: "Update",
+    })
+    await setPageState({
+      page: page,
+    })
+  }
+
   return (
     <div className="mapWrapper">
       <div className="App-Header">
@@ -123,10 +139,10 @@ function App() {
         {pageState.page === "Main" && <Main code={codeState.code} />}
         {pageState.page === "Request" && <Request onSubmit={onRequestBoardSubmit} goWriteBoard={goWriteBoardSubmit} />}
         {pageState.page === "Change" && <Change code={codeState.code} onSubmit={changeCode} />}
-        {pageState.page === "DetailBoard" && <Detail board={boardState.board} onSubmit={changePage} />}
+        {pageState.page === "DetailBoard" && <Detail board={boardState.board} onSubmit={changePage} goUpdate={updateBoard} />}
         {pageState.page === "Register" && <Register onSubmit={changePage} />}
         {pageState.page === "Login" && <Login onSubmit={onLoginSubmit} />}
-        {pageState.page === "Write" && <Writepage onSubmit={changePage} boardInfo={boardState.board} />}
+        {pageState.page === "Write" && <Writepage onSubmit={changePage} state={writeState.state} boardInfo={boardState.board} />}
         <Button onClick={get_pred_result} >클릭하여 예측결과 확인</Button> : {predResult.pred_result}
       </div>
     </div>

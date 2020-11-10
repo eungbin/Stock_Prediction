@@ -25,7 +25,9 @@ function WriteBoard(props) {
   const classes = useStyles();
 
   useEffect(() =>  {
-    console.log(props.boardInfo.title)
+    setWriteState({
+      state: props.state,
+    })
   }, [props]);
 
   const [titleState, setTitleState] = useState({
@@ -36,8 +38,11 @@ function WriteBoard(props) {
     inner: props.boardInfo.inner,
   })
 
+  const [writeState, setWriteState] = useState({
+    state: props.state,
+  })
+
   const titleUpdate = (e) => {
-    console.log(e.target.value)
     setTitleState({
         title: e.target.value,
     })
@@ -50,22 +55,35 @@ function WriteBoard(props) {
   }
 
   const write = () => {
-    axios.post("http://localhost:3001/writeboard", {
+    if(writeState.state === "Write") {
+      console.log("write")
+      axios.post("http://localhost:3001/writeboard", {
+          title: titleState.title,
+          inner: innerState.inner,
+          id: sessionStorage.getItem("id"),
+      }).then(res => {
+          if(res.data) {
+            alert("글작성 완료")
+            props.onSubmit("Request")
+          } else {
+            console.log(res)
+          }
+      })
+    } else if(writeState.state === "Update") {
+      console.log("update")
+      axios.post("http://localhost:3001/modifyboard", {
+        no: props.boardInfo.no,
         title: titleState.title,
         inner: innerState.inner,
-        id: sessionStorage.getItem("id"),
-    }).then(res => {
-        if(!(res.data)) {
-
+      }).then(res => {
+        if(res.data) {
+          alert("수정 완료")
+          props.onSubmit("Request")
         } else {
-            if(props.boardInfo.title === undefined) {
-              alert("글작성 완료")
-            } else {
-              alert("수정 완료")
-            }
-            props.onSubmit("Request")
+          console.log(res)
         }
-    })
+      })
+    }
   }
   
   return (

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03c8b98-c2b6-40f8-b32c-b978329f6e13" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/news_analysis/data_preprocessing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/news_analysis/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/news_analysis/konlpy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/news_analysis/naver_news_crawling.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/news_analysis/news_model_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/data_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_analysis/data_preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_analysis/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,28 +44,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
-    <configuration name="LSTM_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LSTM_Stock_Prediction" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LSTM_model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.naver_news_crawling">
     <configuration name="data_preprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LSTM_Stock_Prediction" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,7 +66,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insert_db" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="konlpy" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LSTM_Stock_Prediction" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -92,11 +74,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_analysis" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insert_db.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_analysis/konlpy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -105,7 +87,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="model_predict" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="naver_news_crawling" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LSTM_Stock_Prediction" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -113,11 +95,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_analysis" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_predict.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_analysis/naver_news_crawling.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="news_model_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="LSTM_Stock_Prediction" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_analysis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_analysis/news_model_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -149,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.naver_news_crawling" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.konlpy" />
+        <item itemvalue="Python.news_model_test" />
         <item itemvalue="Python.data_preprocessing" />
-        <item itemvalue="Python.model_predict" />
-        <item itemvalue="Python.LSTM_model" />
-        <item itemvalue="Python.insert_db" />
       </list>
     </recent_temporary>
   </component>

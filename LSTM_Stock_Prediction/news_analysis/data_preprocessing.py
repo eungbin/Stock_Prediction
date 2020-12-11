@@ -74,9 +74,9 @@ for title in titles:
     if posFlag == True:
         label[j] = 1
     elif negFlag == True:
-        label[j] = -1
-    elif negFlag == False and posFlag == False:
         label[j] = 0
+    elif negFlag == False and posFlag == False:
+        label[j] = -1
     j += 1
 # print(count)
 title_dic['label'] = label
@@ -85,7 +85,7 @@ title_df = pd.DataFrame(title_dic)
 def dftoCsv(df, num):
     df.to_csv(('./title_datas'+ str(num) +'.csv'), sep=',', na_rep='NaN', encoding='CP949')
 
-dftoCsv(title_df, 2)
+dftoCsv(title_df, 3)
 print(posneg)
 print(len(positive))
 print(len(posneg))

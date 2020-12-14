@@ -7,6 +7,17 @@ from keras.layers import Embedding, Dense, CuDNNLSTM
 from keras.models import Sequential
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
+import pymysql
+
+HOST = '127.0.0.1'
+PORT = 3306
+USER = 'root'
+DB = 'stock_prediction'
+PASSWORD = 'vk2sjf12'
+
+conn = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, db=DB)
+
+cursor = conn.cursor(pymysql.cursors.DictCursor)
 
 
 data = pd.read_csv("./title_datas3.csv", encoding='CP949')
@@ -112,31 +123,82 @@ test_x = []
 #
 # model.save('./news_model2.h5')
 
+# 실제 뉴스 데이터 불러와서 분석
 model = load_model('./news_model2.h5')
-model.summary()
 
-data = ["삼성전자 주가 상승"]
-x_data = []
+# 크롤링한 naver news csv 파일 load
+csv_craw_data = pd.read_csv('dataset/naver_news/news.csv', encoding='utf-8-sig')
 
-for sentence in data:
-    x_data.append(sentence)
+# pickle file load
+load_pickle = pd.read_pickle("../real_data.pickle")
+dic_pred_result = {}
 
-x_data = np.array(x_data)
-x_data = tokenizer.texts_to_sequences(x_data)
+# nan 값을 ''[공백]으로 대체
+csv_craw_data.fillna('', inplace=True)
 
-max_len = 15
-x_data = pad_sequences(x_data, maxlen=max_len)
+# 각 종목의 코드를 이용한 배열 선언 및 뉴스데이터 매치
+for stock in load_pickle.values:
+    globals()['news_list_{}'.format(stock[1])] = []
+    globals()['pred_list_{}'.format(stock[1])] = []
+    dic_pred_result[stock[0]+'긍정'] = 0
+    dic_pred_result[stock[0]+'부정'] = 0
+    for data in csv_craw_data[stock[0]]:
+        if data != "":
+            globals()['news_list_{}'.format(stock[1])].append(data)
 
-pred = model.predict(x_data)
-print("input data : {0}".format(x_data))
-print("original data : {0}".format(data))
-print(pred)
+for stock in load_pickle.values:
+    for data in globals()['news_list_{}'.format(stock[1])]:
+        x_data = []
+        for sentence in [data]:
+            x_data.append(sentence)
 
-pred_result = []
+        x_data = np.array(x_data)
+        x_data = tokenizer.texts_to_sequences(x_data)
 
-for list in pred:
-    for data in list:
-        pred_result.append(data)
+        max_len = 15
+        x_data = pad_sequences(x_data, maxlen=max_len)
 
-for data in pred_result:
-    print(data*100)
+        pred = model.predict(x_data)
+        # print("input data : {0}".format(x_data))
+        # print("original data : {0}".format(data))
+        # print(pred)
+
+        for list in pred:
+            globals()['pred_list_{}'.format(stock[1])].append(list)
+
+    # for result in  globals()['pred_list_{}'.format(stock[1])]:
+    #     print("{0}의 결과 : {1}".format(stock[0], result*100))
+for stock in load_pickle.values:
+    for list in globals()['pred_list_{}'.format(stock[1])]:
+        if list[0] > list[1]:
+            dic_pred_result[stock[0]+'부정'] += 1
+        elif list[0] < list[1]:
+            dic_pred_result[stock[0]+'긍정'] += 1
+
+print(dic_pred_result)
+
+for code in load_pickle.values:
+    sql = "select exists(select * from news_pred_result where code={0})".format(code[1])
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    indexing_sql = sql[7:]
+    if(row[indexing_sql] == 1): #만약 DB에 해당 코드의 예측결과가 존재한다면
+        print("{0}의 예측결과가 존재하기 때문에 삭제 후 다시 삽입합니다.".format(code[1]))
+        sql = "delete from news_pred_result where code={0}".format(code[1])
+        cursor.execute(sql)
+
+    print("{0}의 긍정 결과 : ".format(code[0], dic_pred_result[code[0]+'긍정']))
+    print("{0}의 부정 결과 : ".format(code[0], dic_pred_result[code[0]+'부정']))
+
+    if dic_pred_result[code[0]+'긍정'] > dic_pred_result[code[0]+'부정']:
+        flag = "긍정"
+    elif dic_pred_result[code[0]+'긍정'] < dic_pred_result[code[0]+'부정']:
+        flag = "부정"
+    else:
+        flag = "중립"
+    sql = "insert into news_pred_result values(%s, %s)" #종목코드 + 값
+    cursor.execute(sql, (code[1], flag))
+    print("{0}'s inserting is complete".format(code[1]))
+
+cursor.close()
+conn.commit()

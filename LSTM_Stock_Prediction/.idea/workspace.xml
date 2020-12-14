@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03c8b98-c2b6-40f8-b32c-b978329f6e13" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/news_analysis/crawling_datas_processing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news_analysis/dataset/naver_news/news.csv" beforeDir="false" afterPath="$PROJECT_DIR$/news_analysis/dataset/naver_news/news.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news_analysis/naver_news_crawling.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_analysis/naver_news_crawling.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/news_model.h5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/news_model_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_analysis/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/title_datas0.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/title_datas1.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/news_analysis/title_datas2.csv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +46,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.LSTM_model">
+  <component name="RunManager" selected="Python.crawling_datas_processing">
     <configuration name="LSTM_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LSTM_Stock_Prediction" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -55,6 +60,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LSTM_model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="crawling_datas_processing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="LSTM_Stock_Prediction" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_analysis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_analysis/crawling_datas_processing.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -84,7 +110,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="konlpy" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="model_predict" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LSTM_Stock_Prediction" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -92,32 +118,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_analysis" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_analysis/konlpy.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="naver_news_crawling" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="LSTM_Stock_Prediction" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news_analysis" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news_analysis/naver_news_crawling.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_predict.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -149,11 +154,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.crawling_datas_processing" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.model_predict" />
         <item itemvalue="Python.LSTM_model" />
         <item itemvalue="Python.insert_db" />
-        <item itemvalue="Python.naver_news_crawling" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.konlpy" />
       </list>
     </recent_temporary>
   </component>

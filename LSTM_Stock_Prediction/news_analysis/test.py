@@ -80,20 +80,7 @@ test_x = []
 #
 # y_train = []
 # y_test = []
-# # for i in range(len(df_train['label'])):
-# # #     if df_train['label'].iloc[i] == 1:
-# # #         y_train.append([0, 0, 1])
-# # #     elif df_train['label'].iloc[i] == 0:
-# # #         y_train.append([0, 1, 0])
-# # #     elif df_train['label'].iloc[i] == -1:
-# # #         y_train.append([1, 0, 0])
-# # # for i in range(len(df_test['label'])):
-# # #     if df_test['label'].iloc[i] == 1:
-# # #         y_test.append([0, 0, 1])
-# # #     elif df_test['label'].iloc[i] == 0:
-# # #         y_test.append([0, 1, 0])
-# # #     elif df_test['label'].iloc[i] == -1:
-# # #         y_test.append([1, 0, 0])
+#
 # for i in range(len(df_train['label'])):
 #     if df_train['label'].iloc[i] == 1:
 #         y_train.append([0, 1])

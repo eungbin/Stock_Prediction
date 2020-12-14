@@ -13,6 +13,10 @@ function Main(props) {
     loading: true,
   })
 
+  const [newsResult, setNewsResult] = useState({
+    news_pred_result: '',
+  })
+
   useEffect(() =>  {
     setLoadingState({
       loading: true,
@@ -33,7 +37,9 @@ function Main(props) {
       setLoadingState({
         loading: false,
       })
-    }, 1500);
+    }, 500);
+
+    get_news_pred_result()
   }, []);
 
   // const get_pred_result = () => {
@@ -46,12 +52,30 @@ function Main(props) {
   //     })
   // }
 
+  const get_news_pred_result = async () => {
+    let filtered = []
+    let posneg = ""
+    await axios.get("http://localhost:3001/news_pred_result")
+      .then(res => {
+        filtered = res.data.filter(data => data.code === props.code)
+        if(filtered[0].news_pred === "긍정") {
+          posneg = "매수"
+        } else if(filtered[0].news_pred === "부정") {
+          posneg = "매도"
+        }
+        setNewsResult({
+          news_pred_result: posneg,
+        })
+      })
+  }
+
   return (
     <>
       <table border="0" width="100%" height="500px">
           <tr>
             <td rowSpan="2" width="60%">{loadingState.loading === true ? <CircularProgress className="spinner" /> : <Chart data={objStock.data} />}</td>
             <td>
+              {props.code}.KS종목 {newsResult.news_pred_result} 추천!
             </td>
           </tr>
 

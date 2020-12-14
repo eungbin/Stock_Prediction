@@ -30,6 +30,16 @@ app.get('/pred_result', function (req, res) {
     })
 });
 
+app.get('/news_pred_result', function (req, res) {
+    connection.query("select * from news_pred_result", function (error, result, fields) {
+        if (error) {
+            res.send('err: ' + error);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
 app.get('/data', function (req, res) {
     connection.query("select date, close from ?? order by date", req.query.code, function (error, result, fields) {
         if(error) {
@@ -158,7 +168,8 @@ app.post('/deleteboard', function(req, res) {
 })
 
 app.post('/boardstate', function(req, res){
-    connection.query("update board set status = ? where no = ?", [req.body.state, req.body.no], function (error, result) {
+    connection.query("update board set status = ? where no = ?", 
+    [req.body.state, req.body.no], function (error, result) {
         if(error) {
             res.send(error);
         } else {

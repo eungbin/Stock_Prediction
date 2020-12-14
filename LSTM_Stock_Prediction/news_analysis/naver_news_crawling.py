@@ -19,7 +19,8 @@ for data in load_pickle.values:
     globals()['news_list_{}'.format(data[1])] = []
 
 # 네이버 금융 실시간 속보 크롤링
-for i in range(10):
+for i in range(50):
+    print("{0}번째 페이지...".format(str(i)))
     html = urlopen("https://finance.naver.com/news/news_list.nhn?mode=LSS2D&section_id=101&section_id2=258&page={0}".format(str(i)))
 
     bsObject = BeautifulSoup(html, "html.parser")
@@ -27,7 +28,6 @@ for i in range(10):
     test = bsObject.select('body > div#wrap > div#newarea > div#contentarea > div#contentarea_left > ul.realtimeNewsList > li.newsList a[title]')
 
     for data in test:
-        print(data.get_text())
         news_list.append(data.get_text())   # 실시간 속보 배열에 저장
 
 # 모든 뉴스중 키워드가 포함된 뉴스만 배열에 저장
